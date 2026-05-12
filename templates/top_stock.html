@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Top Stock</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">   
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="/">Home</a>
+            <a href="/top-stocks">Top Stocks</a>
+        </div>
+
+          <div class="nav-right">
+            <form action="{{ url_for('search') }}" method="get" class="search-form">
+                <input type="text" name="query" placeholder="Search stock symbol..." required>
+                <button type="submit">🔍 Search</button>
+            </form>
+        </div>
+    </nav>
+    <nav class="category-nav">
+        {% for key, label in {
+            'most_actives': 'Most Active',
+            'day_gainers': 'Day Gainers',
+            'day_losers': 'Day Losers',
+            'trending_tickers': 'Trending Tickers',
+            'undervalued_large_caps': 'Undervalued Large Caps',
+            'growth_technology_stocks': 'Growth Tech Stocks'
+        }.items() %}
+        <a href="{{ url_for('top_stock') }}?category={{ key }}"
+           class="{% if selected_category == key %}active{% endif %}">
+           {{ label }}
+        </a>
+        {% endfor %}
+    </nav>
+    <center><h2>Country wise Stock</h2></center>
+    <div class="content">
+        <ul class="stock-list">
+            {% for stock in symbols %}
+                <div class="stock-item">
+                <a href="{{ url_for('stock_detail', symbol=stock.symbol) }}"  style="text-decoration: none; font-size: 30px; ">
+                    <strong>{{ stock.symbol }}</strong> - {{ stock.name }}
+                </a>
+            </div>
+            {% else %}
+                <li>No stock data available.</li>
+            {% endfor %}
+        </ul>
+
+</body>
+</html>

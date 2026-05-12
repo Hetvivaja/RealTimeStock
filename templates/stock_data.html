@@ -1,0 +1,91 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Stock_Data</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% if results %}
+    <form method="get" id="chartForm">
+    <label for="chartType">Chart Type:</label>
+      <select name="chart_type" id="chartType" onchange="document.getElementById('chartForm').submit();">
+        <option value="line" {% if chart_type == 'line' %}selected{% endif %}>Line</option>
+        <option value="bar" {% if chart_type == 'bar' %}selected{% endif %}>Bar</option>
+        <option value="candle" {% if chart_type == 'candle' %}selected{% endif %}>Candle</option>
+        <option value="area" {% if chart_type == 'area' %}selected{% endif %}>Mountain</option>
+      </select>
+    </form>
+  <a href="{{ url_for('top_stock') }}" style="text-decoration: none;"><---Back Page</a>
+    <div class="period-selector">
+        {% set periods = ['1d', '5d','7d', '1mo', '6mo', 'ytd', '1y', '5y', 'max'] %}
+        {% for p in periods %}
+        <a href="{{ url_for('stock_data', symbol=results[0].symbol, chart_type=chart_type, period=p) }}"
+           class="{% if p == period %}active{% endif %}">
+            {{ p.upper() }}
+        </a>
+        {% endfor %}
+    </div>
+{% endif %}
+
+    <div class="content">
+        {%if error%}
+        <p style="color: red;">{{error}}</p>
+        {%endif%}
+
+        {%for stock in results%}
+          <div class="chart">{{stock.chart | safe}}</div>
+        
+           <center> <h2>{{stock.name}} ({{stock.symbol}})</h2></center>
+
+        <div class="stock-card">
+            <p><strong>Open:</strong>{{stock.open}}</p>
+            <p><strong>previousClose:</strong>{{stock.close}}</p>
+            <p><strong>Volume:</strong>{{stock.volume}}</p>
+            <p><strong>Market-cap:</strong>{{stock.marketCap}}</p>
+            <p><strong>Beta:</strong>{{stock.beta}}</p>
+            <p><strong>pe-Ratio:</strong>{{stock.peRatio}}</p>
+            <p><strong>EPS:</strong>{{stock.eps}}</p>
+            <p><strong>Earning-date:</strong>{{stock.earningsDate}}</p>
+            <p><strong>Bid:</strong>{{stock.bid}}</p>
+            <p><strong>Ask:</strong>{{stock.ask}}</p>
+            <p><strong>Day-Range:</strong>{{stock.dayRange}}</p>
+            <p><strong>52 week Range:</strong>{{stock.fiftyTwoWkRange}}</p>
+            <p><strong>Avg. Volume:</strong>{{stock.avgVolume}}</p>
+            <p><strong>Target Est:</strong>{{stock.targetPrice}}</p>
+        </div>
+        {%endfor%}
+    </div>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ symbol }} Stock Chart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+     <nav class="navbar">
+        <div class="nav-left">
+            <a href="/">Home</a>
+            <a href="/top-stocks">Top Stocks</a>
+        </div>
+
+          <div class="nav-right">
+            <form action="{{ url_for('search') }}" method="get" class="search-form">
+                <input type="text" name="query" placeholder="Search stock symbol..." required>
+                <button type="submit">🔍 Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <h2 style="text-align: center;">Stock Chart for {{ symbol }}</h2>
+
+    <!-- Load Dash chart in iframe -->
+   <!-- <iframe src="/dash/{{ symbol }}" width="100%" height="600" frameborder="0"></iframe> -->
+     <iframe src="/dash/stock/{{ symbol }}" width="100%" height="600" frameborder="0"></iframe>
+
+</body>
+</html>

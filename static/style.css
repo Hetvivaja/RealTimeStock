@@ -1,0 +1,212 @@
+body {
+    margin: 0;
+    font-family:'Times New Roman', Times, serif;
+    background-color: #f9fafb;
+    font-size: 25px;
+}
+.my-img{
+    background-image: url('/static/stock1.png');
+     background-size: cover;
+     background-repeat: no-repeat;
+      background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e293b;  
+    padding: 12px 20px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-left a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-left a:hover {
+    color:  #f700e7;
+}
+
+.nav-right .search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-form input[type="text"] {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    font-size: 20px;
+    font-family:'Times New Roman', Times, serif;
+}
+
+.search-form button {
+    padding: 6px 12px;
+    border: none;
+    background-color: #bb47b9; 
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+    font-family:'Times New Roman', Times, serif;
+}
+.search-form button:hover {
+    background-color: #514453;
+}
+
+.content {
+    padding: 20px;
+}
+
+.stock-card{
+    background-color: rgb(241, 241, 244);
+    padding: 20px;
+    margin-bottom: 30px;
+    border-left: 6px solid #590000;
+    border-right: 6px solid #590000;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 5fr));
+}
+
+.stock-card h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #333;
+}
+.chart {
+    margin: 20px 0;
+    size: 50px;
+}
+
+.stock-list {
+    display:inline;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+.stock-item {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stock-item a {
+    text-decoration: none;
+    color: #3c3e25;
+    font-size: 16px;
+    font-size: 18px;
+}
+
+.stock-item a:hover {
+    color: #f700e7;
+}
+
+.stock-list a:hover {
+    text-decoration: underline;
+}
+
+.category-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 35px;
+}
+
+.category-nav a {
+    padding: 8px 12px;
+    background-color: #eee;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    transition: 0.3s;
+    margin-top: 20px;
+}
+
+.category-nav a.active,
+.category-nav a:hover {
+    background-color: #cf48c1;
+    color: white;
+}
+
+/* .country-form {
+    margin-bottom: 20px;
+}
+
+.country-form select {
+    padding: 5px 10px;
+    font-size: 14px;
+} */
+/* Chart type form container */
+#chartForm {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 10px 30px;
+    gap: 10px;
+}
+
+/* Label styling */
+#chartForm label {
+    font-weight: bold;
+    font-size: 25px;
+    color: #6f1c95;
+}
+
+/* Dropdown styling */
+#chartType {
+    padding: 6px 12px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #eaeaea;
+    color: #333;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hover and focus effects */
+#chartType:hover,
+#chartType:focus {
+    border-color: #888;
+    background-color: #9c899b;
+    outline: none;
+}
+.period-selector {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.period-selector a {
+    margin: 0 8px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    transition: background 0.3s;
+}
+
+.period-selector a:hover {
+    background-color: #ddd;
+}
+
+.period-selector a.active {
+    background-color: #cce5ff;
+    color: #004085;
+    border: 1px solid #b8daff;
+}
