@@ -1,32 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Top Stock</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-left">
-            <a href="/">Home</a>
-            <a href="/top-stocks">Top Stocks</a>
-        </div>
-        <div class="nav-right">
-            <form action="{{ url_for('search') }}" method="get" class="search-form">
-                <input type="text" name="query" placeholder="Search stock symbol..." required>
-                <button type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
-    <nav class="category-nav">
+{% block title %}Top Stocks | RealStock Market{% endblock %}
+
+{% block content %}
+<section class="page-hero compact">
+    <div>
+        <p class="eyebrow">Market screeners</p>
+        <h1>Top Stocks</h1>
+        <p>Browse active, trending, gaining, and losing stocks from Yahoo Finance screeners.</p>
+    </div>
+</section>
+
+<section class="content-shell">
+    <nav class="category-nav" aria-label="Stock categories">
         {% for key, label in {
             'most_actives': 'Most Active',
             'day_gainers': 'Day Gainers',
             'day_losers': 'Day Losers',
-            'trending_tickers': 'Trending Tickers',
+            'trending_tickers': 'Trending',
             'undervalued_large_caps': 'Undervalued Large Caps',
-            'growth_technology_stocks': 'Growth Tech Stocks'
+            'growth_technology_stocks': 'Growth Tech'
         }.items() %}
         <a href="{{ url_for('top_stock') }}?category={{ key }}"
            class="{% if selected_category == key %}active{% endif %}">
@@ -35,19 +28,23 @@
         {% endfor %}
     </nav>
 
-    <h2 class="page-title">Top Stocks</h2>
-    <div class="content">
-        <ul class="stock-list">
-            {% for stock in symbols %}
-            <li class="stock-item">
-                <a href="{{ url_for('stock_detail', symbol=stock.symbol) }}">
-                    <strong>{{ stock.symbol }}</strong> - {{ stock.name }}
-                </a>
-            </li>
-            {% else %}
-            <li>No stock data available.</li>
-            {% endfor %}
-        </ul>
+    <div class="stock-list-header">
+        <h2>{{ symbols|length }} Stocks Found</h2>
+        <p>Select a symbol to open its interactive chart.</p>
     </div>
-</body>
-</html>
+
+    <ul class="stock-list">
+        {% for stock in symbols %}
+        <li class="stock-item">
+            <a href="{{ url_for('stock_detail', symbol=stock.symbol) }}">
+                <span class="ticker">{{ stock.symbol }}</span>
+                <span class="company">{{ stock.name }}</span>
+                <span class="open-link">View chart</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="empty-state">No stock data available right now. Try another category.</li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

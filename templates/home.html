@@ -1,22 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Stock Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body class="my-img">
-    <nav class="navbar">
-        <div class="nav-left">
-            <a href="/">Home</a>
-            <a href="/top-stocks">Top Stocks</a>
-        </div>
-        <div class="nav-right">
-            <form action="{{ url_for('search') }}" method="get" class="search-form">
-                <input type="text" name="query" placeholder="Search stock symbol..." required>
-                <button type="submit">Search</button>
+{% extends "base.html" %}
+
+{% block title %}RealStock Market | Dashboard{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="hero-overlay">
+        <div class="hero-content">
+            <p class="eyebrow">Live market dashboard</p>
+            <h1>Track stocks with clear charts, fast search, and market movers.</h1>
+            <p class="hero-copy">
+                Explore price history, compare chart styles, and monitor active gainers and losers from one responsive dashboard.
+            </p>
+            <form action="{{ url_for('search') }}" method="get" class="hero-search" data-search-form>
+                <input type="search" name="query" placeholder="Enter stock symbol, e.g. MSFT" autocomplete="off" required>
+                <button type="submit">View Stock</button>
             </form>
+            <div class="symbol-row" aria-label="Popular stock symbols">
+                <a href="{{ url_for('stock_detail', symbol='AAPL') }}">AAPL</a>
+                <a href="{{ url_for('stock_detail', symbol='MSFT') }}">MSFT</a>
+                <a href="{{ url_for('stock_detail', symbol='TSLA') }}">TSLA</a>
+                <a href="{{ url_for('stock_detail', symbol='NVDA') }}">NVDA</a>
+            </div>
         </div>
-    </nav>
-</body>
-</html>
+    </div>
+</section>
+
+<section class="section-band">
+    <div class="section-heading">
+        <p class="eyebrow">Market shortcuts</p>
+        <h2>Start with the lists investors check every day</h2>
+    </div>
+    <div class="feature-grid">
+        <a class="feature-card" href="{{ url_for('top_stock') }}?category=most_actives">
+            <span>Most Active</span>
+            <strong>High-volume names moving today</strong>
+        </a>
+        <a class="feature-card" href="{{ url_for('top_stock') }}?category=day_gainers">
+            <span>Day Gainers</span>
+            <strong>Stocks leading the session</strong>
+        </a>
+        <a class="feature-card" href="{{ url_for('top_stock') }}?category=day_losers">
+            <span>Day Losers</span>
+            <strong>Track names under pressure</strong>
+        </a>
+    </div>
+</section>
+{% endblock %}

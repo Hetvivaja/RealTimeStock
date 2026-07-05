@@ -59,5 +59,15 @@ def generate_plotly_chart(symbol, chart_type='Line', period='1mo'):
     elif chart_type == 'Area':
         fig.add_trace(go.Scatter(x=data.index, y=data['Close'], fill='tozeroy', name='Close'))
 
-    fig.update_layout(title=f"{symbol} - {chart_type} Chart", xaxis_title='Date', yaxis_title='Price')
+    fig.update_layout(
+        title=f"{symbol} - {chart_type} Chart",
+        xaxis_title='Date',
+        yaxis_title='Price',
+        template='plotly_white',
+        margin=dict(l=42, r=24, t=72, b=42),
+        font=dict(family='Segoe UI, Arial, sans-serif', color='#14213d'),
+        hovermode='x unified',
+        paper_bgcolor='white',
+        plot_bgcolor='white',
+    )
     return fig

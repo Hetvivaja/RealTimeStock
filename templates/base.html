@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RealStock Market{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Primary navigation">
+            <a class="brand" href="{{ url_for('home') }}" aria-label="RealStock Market home">
+                <span class="brand-mark">RS</span>
+                <span>
+                    <strong>RealStock</strong>
+                    <small>Market intelligence</small>
+                </span>
+            </a>
+
+            <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-panel">
+                <div class="nav-links">
+                    <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a>
+                    <a href="{{ url_for('top_stock') }}" class="{% if request.endpoint == 'top_stock' %}active{% endif %}">Top Stocks</a>
+                </div>
+                <form action="{{ url_for('search') }}" method="get" class="search-form" data-search-form>
+                    <input type="search" name="query" placeholder="Search symbol, e.g. AAPL" autocomplete="off" required>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -13,25 +13,34 @@ def init_dash(server):
     )
 
     dash_app.layout = dbc.Container([
-        html.H2("Stock Chart Viewer", className="text-center my-3"),
+        html.Div([
+            html.Div([
+                html.P("Chart workspace", className="dash-eyebrow"),
+                html.H2("Stock Chart Viewer"),
+            ]),
+        ], className="dash-title"),
         dcc.Location(id='url', refresh=False),
         dcc.Store(id='symbol-store', data=''),
-        dcc.Dropdown(
-            id='chart-type',
-            options=[{'label': c, 'value': c} for c in ['Line', 'Bar', 'Candle', 'Area']],
-            value='Line',
-            className='my-2',
-            style={'fontSize':20}
-        ),
-        dcc.RadioItems(
-            id='period',
-            options=[{'label': p, 'value': p} for p in ['1d', '5d', '1mo', '3mo', '6mo', '1y']],
-            value='1mo',
-            className='mb-3',style={'display':'flex','fontSize':20},labelStyle={'margin-right': '20px'},
-        ),
+        html.Div([
+            html.Label("Chart Type", htmlFor="chart-type"),
+            dcc.Dropdown(
+                id='chart-type',
+                options=[{'label': c, 'value': c} for c in ['Line', 'Bar', 'Candle', 'Area']],
+                value='Line',
+                clearable=False,
+            ),
+            html.Label("Period", htmlFor="period"),
+            dcc.RadioItems(
+                id='period',
+                options=[{'label': p, 'value': p} for p in ['1d', '5d', '1mo', '3mo', '6mo', '1y']],
+                value='1mo',
+                className='period-toggle',
+                labelStyle={'margin': 0},
+            ),
+        ], className="dash-toolbar"),
         dcc.Graph(id='stock-chart'),
         html.Div(id='stock-info'),
-    ])
+    ], fluid=True, className="dash-shell")
 
     @dash_app.callback(
         Output('symbol-store', 'data'),
@@ -68,28 +77,29 @@ def init_dash(server):
         if not info:
             return html.P("No stock information available.")
         return html.Div([
-            html.H4(f"{info.get('name', 'N/A')} ({symbol.upper()})"),
-            html.P(f"Open: {info.get('open', 'N/A')}"),
-            html.P(f"Close: {info.get('close', 'N/A')}"),
-            html.P(f"Volume: {info.get('volume', 'N/A')}"),
-            html.P(f"Market Cap: {info.get('marketCap', 'N/A')}"),
-            html.P(f"Beta: {info.get('beta', 'N/A')}"),
-            html.P(f"PE Ratio: {info.get('peRatio', 'N/A')}"),
-            html.P(f"EPS: {info.get('eps', 'N/A')}"),
-            html.P(f"Earnings Date: {info.get('earningsDate', 'N/A')}"),
-            html.P(f"Bid: {info.get('bid', 'N/A')}"),
-            html.P(f"Ask: {info.get('ask', 'N/A')}"),
-            html.P(f"Day Range: {info.get('dayRange', ['N/A', 'N/A'])[0]} - {info.get('dayRange', ['N/A', 'N/A'])[1]}"),
-            html.P(f"52 Week Range: {info.get('fiftyTwoWkRange', ['N/A', 'N/A'])[0]} - {info.get('fiftyTwoWkRange', ['N/A', 'N/A'])[1]}"),
-            html.P(f"Average Volume: {info.get('avgVolume', 'N/A')}"),
-            html.P(f"Target Price: {info.get('targetPrice', 'N/A')}")
-        ], style={
-            'border': '1px solid #ccc',
-            'padding': '15px',
-            'borderRadius': '8px',
-            'marginBottom': '20px',
-            'backgroundColor': '#f8f9fa',
-            'fontSize':30
-        })
+            html.H3(f"{info.get('name', 'N/A')} ({symbol.upper()})", className="info-title"),
+            html.Div([
+                metric("Open", info.get('open', 'N/A')),
+                metric("Previous Close", info.get('close', 'N/A')),
+                metric("Volume", info.get('volume', 'N/A')),
+                metric("Market Cap", info.get('marketCap', 'N/A')),
+                metric("Beta", info.get('beta', 'N/A')),
+                metric("PE Ratio", info.get('peRatio', 'N/A')),
+                metric("EPS", info.get('eps', 'N/A')),
+                metric("Earnings Date", info.get('earningsDate', 'N/A')),
+                metric("Bid", info.get('bid', 'N/A')),
+                metric("Ask", info.get('ask', 'N/A')),
+                metric("Day Range", f"{info.get('dayRange', ['N/A', 'N/A'])[0]} - {info.get('dayRange', ['N/A', 'N/A'])[1]}"),
+                metric("52 Week Range", f"{info.get('fiftyTwoWkRange', ['N/A', 'N/A'])[0]} - {info.get('fiftyTwoWkRange', ['N/A', 'N/A'])[1]}"),
+                metric("Average Volume", info.get('avgVolume', 'N/A')),
+                metric("Target Price", info.get('targetPrice', 'N/A')),
+            ], className="info-grid")
+        ], className="info-card")
+
+    def metric(label, value):
+        return html.Div([
+            html.Span(label),
+            html.Strong(str(value))
+        ], className="metric")
 
     return dash_app

@@ -1,25 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ symbol }} Stock Chart</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-left">
-            <a href="/">Home</a>
-            <a href="/top-stocks">Top Stocks</a>
-        </div>
-        <div class="nav-right">
-            <form action="{{ url_for('search') }}" method="get" class="search-form">
-                <input type="text" name="query" placeholder="Search stock symbol..." required>
-                <button type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
-    <h2 style="text-align: center;">Stock Chart for {{ symbol }}</h2>
-    <iframe src="/dash/stock/{{ symbol }}" width="100%" height="600" frameborder="0"></iframe>
-</body>
-</html>
+{% block title %}{{ symbol }} Chart | RealStock Market{% endblock %}
+
+{% block content %}
+<section class="page-hero compact stock-heading">
+    <div>
+        <p class="eyebrow">Interactive quote</p>
+        <h1>{{ symbol }}</h1>
+        <p>Switch chart types and time periods to review recent price action.</p>
+    </div>
+    <a class="secondary-action" href="{{ url_for('top_stock') }}">Browse Top Stocks</a>
+</section>
+
+<section class="chart-shell">
+    <iframe
+        title="{{ symbol }} interactive stock chart"
+        src="/dash/stock/{{ symbol }}"
+        class="chart-frame"
+        loading="lazy">
+    </iframe>
+</section>
+{% endblock %}

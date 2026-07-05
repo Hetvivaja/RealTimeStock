@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+    background: #ffffff;
+    color: #14213d;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.dash-shell {
+    padding: 22px;
+}
+
+.dash-title {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.dash-title h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    line-height: 1.1;
+}
+
+.dash-eyebrow {
+    margin: 0 0 8px;
+    color: #0f9f6e;
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.dash-toolbar {
+    display: grid;
+    grid-template-columns: minmax(220px, 300px) auto;
+    align-items: end;
+    gap: 10px 16px;
+    padding: 16px;
+    margin-bottom: 18px;
+    border: 1px solid #d8e0ea;
+    border-radius: 8px;
+    background: #f7fafc;
+}
+
+.dash-toolbar label {
+    grid-row: 1;
+    margin: 0;
+    color: #64748b;
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.period-toggle {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.period-toggle label {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 12px;
+    border: 1px solid #d8e0ea;
+    border-radius: 8px;
+    background: white;
+    color: #14213d;
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+
+#stock-chart {
+    min-height: 430px;
+}
+
+.info-card {
+    margin-top: 18px;
+    padding: 18px;
+    border: 1px solid #d8e0ea;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.info-title {
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+}
+
+.metric {
+    padding: 14px;
+    border-radius: 8px;
+    background: #f4f7fb;
+}
+
+.metric span,
+.metric strong {
+    display: block;
+}
+
+.metric span {
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.metric strong {
+    margin-top: 4px;
+    color: #14213d;
+    font-size: 1rem;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+    .dash-shell {
+        padding: 14px;
+    }
+
+    .dash-toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    .dash-toolbar label {
+        grid-row: auto;
+    }
+}
